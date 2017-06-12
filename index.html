@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="style/style.css">
+    <meta charset="UTF-8">
+    <title>Fifteen Puzzle</title>
+</head>
+
+<body>
+    
+    <h1 id="title">Fifteen Puzzle</h1>
+    
+    <div id="settings">
+        <table id="sizeTable">
+            <tr>
+                <td id="3s" class="y">3x3</td>
+                <td id="4s" class="y">4x4</td>
+                <td id="5s" class="y">5x5</td>
+                <td id="6s" class="y">6x6</td>
+                <td id="7s" class="y">7x7</td>
+                <td id="8s" class="y">8x8</td>
+                <td id="9s" class="y">9x9</td>
+                <td id="BLANK">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td id="scramble" class="y">Scramble</td>
+                <td id="BLANK2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td id="settingsButton" class="y">More</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div id="puzzle">
+        <table id="game">
+        </table>
+    </div>
+    
+    <div id="settingsModal">
+        <div id="settingsContent">
+            <p>Color pattern:</p>
+            <p>Leaderboard:</p>
+            <button id="close">Close</button>
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="scripts/array.js"></script>
+    <script type="text/javascript" src="scripts/board.js"></script>
+    <script type="text/javascript" src="scripts/draw.js"></script>
+    <script type="text/javascript" src="scripts/input.js"></script>
+    <script type="text/javascript" src="scripts/ai/astar.js"></script>
+    <script type="text/javascript" src="scripts/modal.js"></script>
+</body>
+
+</html>
