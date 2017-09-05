@@ -1,0 +1,251 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,500');
+
+html { margin: 0; }
+
+body {
+    font-family: "Roboto";
+    font-weight: 300;
+    text-align: center;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    
+    color: #333333;
+    text-align: left;
+    
+}
+
+h1 {
+    margin-top: 0;
+}
+
+button {
+    background-color: white;
+    color: black;
+    
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 10pt;
+    
+    border: none;
+    box-shadow: 0px 1px 5px #bdc3c7;
+    border-radius: 2px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin: 10px;
+    
+    cursor: pointer;
+
+    -webkit-transition: box-shadow .3s ease, background-color .3s ease;
+    -moz-transition: box-shadow .3s ease, background-color .3s ease;
+    -ms-transition: box-shadow .3s ease, background-color .3s ease;
+    -o-transition: box-shadow .3s ease, background-color .3s ease;
+    transition: box-shadow .3s ease, background-color .3s ease;
+    
+}
+
+button:hover {
+    background-color: #eeeeee;
+}
+
+button:focus {
+    outline: none;
+}
+
+button:active {
+    box-shadow: 0px 2px 12px #95a5a6;
+}
+
+button.red, button.orange, button.yellow, button.green, button.blue, button.purple, button.black {
+    color: white;
+}
+
+button.red { background-color: rgba(231, 76, 60, 1.0); }
+button.red:hover, button.red:disabled { background-color: rgba(231, 76, 60, 0.6); }
+
+button.orange { background-color: rgba(230, 126, 34, 1.0); }
+button.orange:hover, button.orange:disabled { background-color: rgba(230, 126, 34, 0.6); }
+
+button.yellow { background-color: rgba(241, 196, 15, 1.0); }
+button.yellow:hover, button.yellow:disabled { background-color: rgba(241, 196, 15, 0.6); }
+
+button.green { background-color: rgba(46, 204, 113, 1.0); }
+button.green:hover, button.green:disabled { background-color: rgba(46, 204, 113, 0.6); }
+
+button.blue { background-color: rgba(52, 152, 219, 1.0); }
+button.blue:hover, button.blue:disabled { background-color: rgba(52, 152, 219, 0.6); }
+
+button.purple { background-color: rgba(155, 89, 182, 1.0); }
+button.purple:hover, button.purple:disabled { background-color: rgba(155, 89, 182, 0.6); }
+
+button.black { background-color: rgba(52, 73, 94, 1.0); }
+button.black:hover, button.black:disabled { background-color: rgba(52, 73, 94, 0.6); }
+
+button:disabled {
+    cursor: default;
+}
+
+
+
+
+table.tabs {
+    font-family: "Roboto";
+    text-align: center;
+    margin: auto;
+    margin-bottom: 20px;
+    border-collapse: separate;
+    border-spacing: 0px;
+}
+
+table.tabs td {
+    padding-top: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 5px;
+    
+    color: #999999;
+    border-bottom: 2px solid #bbbbbb;
+    cursor: pointer;
+    
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
+}
+
+table.tabs td:hover {
+
+    color: rgba(52, 152, 219, 1.0);
+    border-bottom: 3px solid rgba(52, 152, 219, 1.0);
+}
+
+table.tabs td.active {
+    color: rgba(52, 152, 219, 1.0);
+    
+    border-bottom: 3px solid rgba(52, 152, 219, 1.0);
+}
+
+
+
+
+
+
+
+.modalWrapper {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    
+    background-color: transparent;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    
+    transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -o-transition: all .3s ease;
+
+}
+
+.modal {
+    background-color: white;
+    border-radius: 2px;
+    padding: 20px;
+    margin: auto;
+    position: relative;
+    
+    overflow: hidden;
+    box-shadow: 2px 2px 8px black;
+    opacity: 0;
+    
+    transition: transform .3s ease-out, opacity .3s;
+    -webkit-transition: transform .3s ease-out, opacity .3s;
+    -moz-transition: transform .3s ease-out, opacity .3s;
+    -o-transition: transform .3s ease-out, opacity .3s;
+    -ms-transition: transform .3s ease-out, opacity .3s;
+    
+    transform: translateY(-60px);
+    
+    width: 50%;
+    height: 50%;
+}
+
+.modal h1 {
+    margin-top: 0;
+
+}
+
+span.closeModal {
+    text-align: right;
+    float: right;
+    
+    color: #c0392b;
+    font-family: "Roboto";
+    font-weight: 500;
+    cursor: pointer;
+}
+span.closeModal:hover { color: #e74c3c; }
+
+a {
+    color: #3498db;
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: none;
+    
+    -webkit-transition: color .3s ease;
+    -moz-transition: color .3s ease;
+    -ms-transition: color .3s ease;
+    -o-transition: color .3s ease;
+    transition: color .3s ease;
+}
+
+a:hover {
+    color: rgba(52, 152, 219, 0.6);
+}
+
+a:visited {
+    color: rgba(155, 89, 182, 1.0);
+}
+
+a:visited:hover {
+    color: rgba(155, 89, 182, 0.6);
+}
+
+a:disabled {
+    color: rgba(52, 152, 219, 0.6);
+}
+
+a:visited:disabled {
+    color: rgba(52, 152, 219, 0.6);
+}
+
+input:focus {
+    outline: none;
+}
+
+input[type=text] {
+    font-size: 10pt;
+    border: none;
+    background-color: transparent;
+    padding: 5px;
+    border-bottom: 1px solid #bbbbbb;
+    margin-bottom: 1px;
+    
+    transition: border-color .3s ease;
+    -webkit-transition: border-color .3s ease;
+    -moz-transition: border-color .3s ease;
+    -o-transition: border-color .3s ease;
+}
+
+input[type=text]:focus {
+    border-bottom: 2px solid #3498db;
+    margin-bottom: 0;
+}

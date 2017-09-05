@@ -1,16 +1,44 @@
+
+
+// So the easter egg isn't obvious in code
+String.prototype.hash = function() {
+    var h = 0;
+    if (this.length == 0) { return h; }
+    
+    for (i = 0; i < this.length; i++) {
+        char = this.charCodeAt(i);
+        h = ((h<<5)-h)+char;
+        h = h & h;
+    }
+    return h;
+}
+
+var patterns = ["angle", "checker", "solid"];
+
 // Establishing functions for onclick of size setting elements
 for (var i = 3; i < 10; i++) {
-    document.getElementById(i.toString() + "s").onclick = function() {
+    document.getElementById(i + "s").onclick = function() {
+        document.querySelector("#sizeTable td.active").className = "";
+        
+        this.className = "active";
         
         d = parseInt(this.id);
         initBoard(range(1, d*d + 1)); draw(board);
+        
+        var s1 = document.getElementById("solvea");
+        var s2 = document.getElementById("solveida");
+        
+
+        s1.disabled = !(d == 3);
+        s2.disabled = !(d == 3);
+
         
         updateMoveFunctions();
     }
 }
 
 
-// for arrrow keys, only onkeydown works, not onkeypress
+// for arrow keys, only onkeydown works, not onkeypress
 // keyCode values for arrow keys
 
 var left = 37;
@@ -22,8 +50,8 @@ var down = 40;
 
 function updateMoveFunctions() {
     
-    for (var i = 1; i < d+1; i++) {
-        document.getElementById(i).onclick = function() {
+    for (var i = 1; i < (d*d)+1; i++) {
+        document.getElementById(i.toString()).onclick = function() {
             if (move(board, parseInt(this.id), true)) {
                 draw(board); updateMoveFunctions();
             }
@@ -84,4 +112,111 @@ document.onkeydown = function(e) {
     if (moved) { draw(board); updateMoveFunctions(); }
     
 }
+
+document.getElementById("solvea").onclick = function() {
+    
+    document.getElementById("thinking").style.display = "block";
+    
+    window.setTimeout(function() {
+        showSolution(astar(board, boardSolved));
+        document.getElementById("thinking").style.display = "none";
+    }, 10);
+
+}
+
+document.getElementById("solveida").onclick = function() {
+    
+    document.getElementById("thinking").style.display = "block";
+    
+    window.setTimeout(function() {
+        showSolution(ida_star(board, boardSolved));
+        document.getElementById("thinking").style.display = "none";
+    }, 10);
+}
+
+
+
+var info = document.getElementById("infoClick");
+var settings = document.getElementById("settingsClick");
+
+info.onmouseover = function() {
+    this.src = "images/info_blue.png";
+}
+info.onmouseleave = function() {
+    this.src = "images/info_gray.png";
+}
+
+settings.onmouseover = function() {
+    this.src = "images/settings_blue.png";
+}
+settings.onmouseleave = function() {
+    this.src = "images/settings_gray.png";
+}
+
+info.onclick = function() {
+    displayModal(document.getElementById("infoModal"));
+}
+
+settings.onclick = function() {
+    displayModal(document.getElementById("settingsModal"));
+    
+    document.querySelector("#settingsModal button.green").className = "red";
+    
+    document.getElementById(colorPattern + "Button").className = "green";
+    
+    if (colorPattern == "solid") {
+        document.getElementById("customColor").disabled = false;
+    }
+}
+
+var patterns = ["solid", "checker", "angle"];
+
+for (var i = 0; i < patterns.length; i++) {
+    document.getElementById(patterns[i] + "Button").onclick = function() {
+        colorPattern = this.id.split("B")[0];
+        
+        if (colorPattern == "solid") {
+            document.getElementById("customColor").disabled = false;
+        }
+        else {
+            document.getElementById("customColor").disabled = true;
+        }
+        
+        document.querySelector("#settingsModal button.green").className = "red";
+        
+        this.className = "green"
+    }
+}
+
+document.getElementById("saveSettings").onclick = function() {
+    hideModal(document.getElementById("settingsModal"));
+    
+    var c = document.getElementById("customColor").value;
+    solidColor = checkValidHex(c) ? c : solidColor;
+    
+    document.querySelector("#settings td.active").click();
+}
+
+
+document.getElementById("algTab").onclick = function() {
+    document.getElementById("algorithmDiv").style.display = "block";
+    document.getElementById("developerDiv").style.display = "none";
+    document.querySelector("#infoTabs td.active").className = "";
+    this.className = "active";
+}
+
+document.getElementById("devTab").onclick = function() {
+    document.getElementById("algorithmDiv").style.display = "none";
+    document.getElementById("developerDiv").style.display = "block";
+    document.querySelector("#infoTabs td.active").className = "";
+    this.className = "active";
+}
+
+document.getElementById("infoLink").onclick = function() {
+    displayModal(document.getElementById("infoModal"));
+    document.getElementById("algTab").click();
+}
+
+
+
 

@@ -4,51 +4,210 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="style/style.css">
+    <link rel="stylesheet" type="text/css" href="dist/l-style/style.css"
     <meta charset="UTF-8">
     <title>Fifteen Puzzle</title>
 </head>
 
 <body>
+    <img src="images/info_gray.png" id="infoClick" width="28" height="28">
+    <img src="images/settings_gray.png" id="settingsClick" width="30" height="30">
     
     <h1 id="title">Fifteen Puzzle</h1>
     
     <div id="settings">
-        <table id="sizeTable">
-            <tr>
-                <td id="3s" class="y">3x3</td>
-                <td id="4s" class="y">4x4</td>
-                <td id="5s" class="y">5x5</td>
-                <td id="6s" class="y">6x6</td>
-                <td id="7s" class="y">7x7</td>
-                <td id="8s" class="y">8x8</td>
-                <td id="9s" class="y">9x9</td>
-                <td id="BLANK">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td id="scramble" class="y">Scramble</td>
-                <td id="BLANK2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td id="settingsButton" class="y">More</td>
-            </tr>
+        <table class="tabs" id="sizeTable">
+            <tbody>
+                <tr>
+                    <td id="3s">3x3</td>
+                    <td id="4s" class="active">4x4</td>
+                    <td id="5s">5x5</td>
+                    <td id="6s">6x6</td>
+                    <td id="7s">7x7</td>
+                    <td id="8s">8x8</td>
+                    <td id="9s">9x9</td>
+                    
+                </tr>
+            </tbody>
         </table>
     </div>
     
     <div id="puzzle">
-        <table id="game">
-        </table>
+        
+        <div id="left">
+            <h3>Scramble Feature</h3>
+            <p>The scramble guarentees a truly random board state.
+            If unsolvable, the board is rescrambled until it
+            is in a solvable position.</p>
+            <button id="scramble" class="black">SCRAMBLE</button>
+        </div>
+        
+        <div id="center">
+            <table id="game"></table>
+        </div>
+        
+        <div id="right">
+            <h3>Auto-Solve Feature</h3>
+            <p>Auto-solve is only available for the 3x3 puzzle, 
+                or the 8-puzzle. The two algoritms used are 
+                called A* and Iterative Deepening A*. <br>
+                <a id="infoLink">Read more.</a>
+            </p>
+            
+            <button id="solvea" class="black" disabled="true">SOLVE WITH A*</button>
+            <span>(Up to 2 minutes)</span>
+            <br><br>
+            <button id="solveida" class="black" disabled="true">SOLVE WITH IDA*</button>
+            <span>(Under 3 seconds)</span>
+            <br><br>
+            <p id="thinking">Thinking...</p>
+        </div>
+        
+        
     </div>
     
-    <div id="settingsModal">
-        <div id="settingsContent">
-            <p>Color pattern:</p>
-            <p>Leaderboard:</p>
-            <button id="close">Close</button>
+    <div class="modalWrapper">
+        <div id="infoModal" class="modal">
+            <span class="closeModal">X</span>
+            
+            <h1>Info</h1>
+            
+            <table class="tabs" id="infoTabs">
+                <tbody>
+                    <tr>
+                        <td class="active" id="algTab">The Algorithm</td>
+                        <td id="devTab">The Developer</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div id="algorithmDiv">
+                <div id="algInner">
+                    <h2>Abstraction</h2>
+                    <p>To abstract the problem of the 15-puzzle to one that
+                    can be solved with a computer, I mapped the board
+                    states to a graph. Each node in the graph represents
+                    a given board state, and the goal node is a solved board.</p>
+                    <h2>A* (A star)</h2>
+                    <p>The first graph traversal algorithm I used to solve
+                    the 15 puzzle was 
+
+                    <a href="https://en.wikipedia.org/wiki/A*_search_algorithm">
+                        A*</a>, which is a variation of 
+
+                    <a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm">
+                        Dijkstra's Algorithm</a> 
+
+                    that uses a <strong>heuristic</strong> to prioritize nodes
+                    that are closer to the goal state. I used a heuristic called
+                    Manhattan distance, which calculates the distance of each
+                    tile from its location on a solved board to estimate the
+                    number of moves needed to solve that state. Additionally,
+                    I wrote a function to calculate linear conflict, which
+                    detects when two tiles are in a row or column but
+                    permuted incorrectly (their positioning is "switched"),
+                    but it actually slowed down the A* and IDA* algorithms because
+                    of the tie it took to calculate, so while the function is 
+                    included in the 
+                        <a href="https://github.com/Professor-L/fifteen-puzzle">
+                            source code
+                        </a> 
+                    on GitHub, the A* function itself does not utilize it.</p>
+                    
+                    <h2>Iterative Deepening A*</h2>
+                    
+                    <p>The second algorithm used, 
+                    <a href="https://en.wikipedia.org/wiki/Iterative_deepening_A*">IDA*</a>, is faster because while it doesn't store already searched nodes and thus searches some board states morethan once, it stores much less in memory. At its heart, IDA* is simply a depth-first search that uses a heuristic and a g-score to optimize the order in which branches of the tree are searched.</p>
+                </div>
+            </div>
+            
+            <div id="developerDiv">
+                <h2>About Me</h2>
+                
+
+                <p>I'm Professor L, and this is my creation. I'm seventeen,
+                    I've been programming for about two years, and this is 
+                    my first experience with graph traversal algorithms 
+                    (hence the use of JavaScript rather than a lower level
+                    language like C). I'm pretty sure I'm contractually 
+                    obligated to link 
+                    <a href="https://github.com/professor-l">
+                        my GitHub profile
+                    </a>
+                    , so there's that. I take an interest in music too,
+                    so I'll link 
+                    <a href="https://soundcloud.com/professor_l">
+                        My Soundcloud
+                    </a> here as well.</p>
+                
+                <h2>Contact Me</h2>
+                <p>You can 
+                    <a href="mailto:ProfessorLWebDev@gmail.com">Email me</a>
+                    at any point with questions or comments (the address
+                    is ProfessorLWebDev@gmail.com, and feel free to 
+                    comment on, reference, download, or fork
+                    <a href="https://github.com/Professor-L/fifteen-puzzle">
+                        this repository on GitHub
+                    </a>. I appreciate all feedback!
+                </p>
+                
+                <h2>Donate</h2>
+                <p>Yes, as a broke student, I've added a link to 
+                    <a href="paypal.me/ElleNolan">My PayPal</a>, where you
+                    can donate to my "cause." I spend a subtantial portion
+                    of my free time programming in lou of getting a 
+                    part-time job, so financial assistance is much 
+                    appreciated. College in the States is expensive.
+                </p>
+            </div>
+            
+            
         </div>
     </div>
+    
+    <div class="modalWrapper">
+        <div id="settingsModal" class="modal">
+            <h1>Color Pattern</h1>
+            
+            <div id="solidDiv" class="settingsPair">
+                <button id="solidButton" class="red">SOLID COLOR</button>
+                <img src="images/solid.png" width="50" height="50">
+                
+                <div id="customColorDiv">
+                    <span><strong>Color Hex:</strong></span>
+                    <input type="text" id="customColor" disabled="true">
+                </div>
+            </div>
+            
+            <br>
+            
+            <div id="checkerDiv" class="settingsPair">
+                <button id="checkerButton" class="red">CHECKER</button>
+                <img src="images/checker.png" width="50" height="50">
+            </div>
+            
+            <br>
+            
+            <div id="angleDiv" class="settingsPair">
+                <button id="angleButton" class="green">SQUARE</button>
+                <img src="images/angle.png" width="50" height="50">
+            </div>
+            
+            <button class="green" id="saveSettings">SAVE</button>
+            
+        </div>
+    </div>
+    
+    
+    <script type="text/javascript" src="dist/l-style/scripts.js"></script>
     
     <script type="text/javascript" src="scripts/array.js"></script>
     <script type="text/javascript" src="scripts/board.js"></script>
     <script type="text/javascript" src="scripts/draw.js"></script>
     <script type="text/javascript" src="scripts/input.js"></script>
+    
     <script type="text/javascript" src="scripts/ai/astar.js"></script>
-    <script type="text/javascript" src="scripts/modal.js"></script>
+    <script type="text/javascript" src="scripts/ai/ida-star.js"></script>
 </body>
 
 </html>

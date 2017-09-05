@@ -3,28 +3,39 @@ var boardSolved = [];
 var d = 4;
 
 function initBoard(arr) {
-    d = Math.sqrt(arr.max());
+    d = Math.sqrt(arr.length);
     board = [];
+    boardSolved = [];
     for (var i = 0; i < d; i++) { board.push([]); boardSolved.push([]); }
     
     var on = 1;
     for (var x = 0; x < d; x++) {
         for (var y = 0; y < d; y++) {
-            board[x][y] = on; boardSolved[x][y] = on; on++;
+            board[x][y] = arr[on-1]; boardSolved[x][y] = on; on++;
         }
     }
 }
 
 function scrambleBoard() {
     var a = board.slice().unNest().randomize();
-    for(var x=0;x<d;x++){for(var y=0;y<d;y++){board[x][y]=a[y+(x*d)];}}
-    while(!solvable(board)) { scrambleBoard(); }
+    initBoard(a);
     
+    while(!solvable(board)) { scrambleBoard(); }
 }
 
 function solvable(b) {
-    var a = b.slice().unNest().remove(d*d).inversions();
-    return (d%2==1)?(a%2==0):((d-position(d*d,b)[1])%2!=a%2);
+    var a = b.slice().unNest();
+    a.remove(d*d);
+    var inv = a.inversions();
+    
+    if (d%2 == 1) {
+        return (inv%2 == 0);
+    }
+    
+    else if (d%2 == 0) {
+        var blankRow = d - (position(d*d, b)[0]);
+        return ( inv%2 != blankRow%2 );
+    }
 }
 
 function position(n, b) {
@@ -82,6 +93,10 @@ function copyBoard(b) {
     return t;
 }
 
+function solved(b) {
+    compareBoards(b, boardSolved);
+}
+
 function manhattan(b1, b2) {
     var total = 0;
     for (var x = 0; x < d; x++) {
@@ -92,6 +107,60 @@ function manhattan(b1, b2) {
     }
     return total;
 }
+
+function linearConflict(b1, b2) {
+    var conflicts = 0;
+    var rac = b1.slice();
+    var racSolved = b2.slice();
+    
+    // Adds columns to rac, racSolved
+    for (var y = 0; y < d; y++) {
+        var a = [];
+        var b = [];
+        for (var x = 0; x < d; x++) {
+            a.push(b1[x][y]);
+            b.push(b2[x][y]);
+        }
+        rac.push(a);
+        racSolved.push(b);
+    }
+    
+    // For each row/column...
+    for (var i = 0; i < rac.length; i++) {
+        // Row or column as array
+        var current = rac[i];
+        var currentSolved = racSolved[i];
+        
+        // Calculate permutations
+        var permutations = calcPerm(currentSolved);
+        
+        for (var p = 0; p < permutations.length; p++) {
+            var two = permutations[p];
+            if (current.hasValue(two[1]) && current.hasValue(two[0])) {
+                if (current.indexOf(two[0]) > current.indexOf(two[1])) {
+                    if (two[0] != d*d && two[1] != d*d) {
+                        conflicts++;
+                    }
+                }
+            }
+        
+        }
+        
+    }
+    
+    return conflicts*2;
+    
+}
+
+function calcPerm(a) {
+        var p = [];
+        for (var k = 0; k < a.length; k++) {
+            for (var m = k+1; m < a.length; m++) {
+                p.push([a[k], a[m]]);
+            }
+        }
+        return p;
+    }
 
 function heuristic(b1, b2) {
     return (manhattan(b1, b2));

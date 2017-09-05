@@ -1,11 +1,17 @@
 var colorPattern = "angle";
-var colors = ["#e74c3c", "#e67e22", "#f1c40f", "#2ecc71", "#1abc9c", "#3498db", "#9b59b6", "#c15379"];
+var colors = ["#e74c3c", "#e67e22", "#f1c40f", "#2ecc71", "#16a085", "#3498db", "#9b59b6", "#c15379"];
+
+var checker1 = colors[0]; var checker2 = colors[5];
+var solid = colors[5];
+
+var light = "#ecf0f1";
+var dark = "#34495e";
 
 function draw(b) {
     clear();
     var table = document.getElementById("game")
     
-    var dim = 450/d;
+    var dim = 400/d;
     
     for (var x = 0; x < d; x++) {
         
@@ -24,7 +30,7 @@ function draw(b) {
                 tile.innerHTML = ""; tile.style.borderColor = "transparent";
             }
             
-            else { tile.innerHTML = tileNum.toString(); }
+            else { tile.innerHTML = tileNum; }
             
             row.appendChild(tile);
             
@@ -48,8 +54,8 @@ function colorBoard(val) {
 }
 
 function checkerColor() {
-    // TRUE is red, FALSE is blue 
-    function rob(b) { return b ? "#e74c3c" : "#3498db"; }
+    // TRUE is color1, FALSE is color2 
+    function rob(b) { return b ? checker1 : checker2; }
     
     // Define current color and table element
     var currentColor = false;
@@ -94,7 +100,7 @@ function solidColor() {
         var row = table.children[x];
         for (var y = 0; y < d; y++) {
             var q = row.children[y];
-            q.style.backgroundColor = "#3498db";
+            q.style.backgroundColor = solid;
             if (q.innerHTML == "") { q.style.backgroundColor = "transparent";}
             
         }
@@ -109,5 +115,20 @@ function showSolution(moves) {
         move(board, moves[on], true);
         draw(board);
         on++;
-    }, 500);
+    }, 200);
+}
+
+function checkValidHex(s) {
+
+    var p=['1','2','3','4','5','6','7','8','9','0','a','b','c','d','e','f'];
+    if (s[0] != "#" || ( s.length != 4 && s.length != 7 )) {
+        return false;
+    }
+    
+    for (var i = 1; i < s.length; i++) {
+        if (!(p.hasValue(s[i]))) {
+            return false;
+        }
+    }
+    return true;
 }
