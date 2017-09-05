@@ -4,8 +4,7 @@ var colors = ["#e74c3c", "#e67e22", "#f1c40f", "#2ecc71", "#16a085", "#3498db", 
 var checker1 = colors[0]; var checker2 = colors[5];
 var solid = colors[5];
 
-var light = "#ecf0f1";
-var dark = "#34495e";
+var fontSizes = [1, 1, 1, 54, 48, 40, 32, 28, 24, 20];
 
 function draw(b) {
     clear();
@@ -21,10 +20,12 @@ function draw(b) {
         for (var y = 0; y < d; y++) {
             var tileNum = b[x][y];
             var tile = document.createElement("td");
-            tile.id = tileNum.toString();
+            tile.id = tileNum;
             
             tile.style.width = dim + "px";
             tile.style.height = (dim-3) + "px";
+            
+            tile.style.fontSize = fontSizes[d] + "pt";
             
             if ( tileNum == d*d ) {
                 tile.innerHTML = ""; tile.style.borderColor = "transparent";
