@@ -192,7 +192,7 @@ document.getElementById("saveSettings").onclick = function() {
     hideModal(document.getElementById("settingsModal"));
     
     var c = document.getElementById("customColor").value;
-    solidColor = checkValidHex(c) ? c : solidColor;
+    solid = checkValidHex(c) ? c : solid;
     
     document.querySelector("#settings td.active").click();
 }
